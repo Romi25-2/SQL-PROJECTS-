@@ -46,6 +46,33 @@ INSERT INTO Inventory (product_id,qauntity, supplier_id)
 	VALUES (1,10,1),
 		   (2,20,2),
            (3,100,2);
+
+-- checks product stock levels
+SELECT p.product_name, i.qauntity
+FROM Inventory i
+JOIN Products p ON i.product_id = p.product_id;
+
+-- update stock levels after sale or purchase 
+
+UPDATE Inventory
+-- Decrease the quantity of the product with product_id 2 (desks) by 3 units after a sale
+SET qaunity = qaunity - 3
+WHERE product_id = 2;
+
+
+-- Update Stock After a Purchase
+-- Increase the quantity of the product with product_id 1 (laptops) by 10 units after a purchase
+UPDATE Inventory
+SET qauntity = qauntity + 10
+WHERE product_id = 1;
+
+-- To view the purchase and sale history for a specific product, use the following query.
+-- This query retrieves the transaction history for a specific product with product_id 1 (Laptop).
+SELECT t.transaction_type, t.quantity, t.transaction_date
+FROM Transactions t
+JOIN Products p ON t.product_id = p.product_id -- Joining Transactions and Products tables on product_id
+WHERE p.product_id = 1; -- Filtering for product_id 1
+
            
 INSERT INTO Transactions(product_id,transaction_type,qauntity)
 	VALUES(1,'purchase',10),
